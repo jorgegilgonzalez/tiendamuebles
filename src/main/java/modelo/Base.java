@@ -18,6 +18,10 @@ public class Base {
     private IntegerProperty idCiudad;
     private StringProperty ciudad;
     private IntegerProperty capacidad;
+
+    public Base() {
+    }
+    
     
     public Base (int idCiudad, String ciudad, int capacidad){
     

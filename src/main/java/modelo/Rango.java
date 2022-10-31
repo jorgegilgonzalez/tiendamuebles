@@ -19,12 +19,19 @@ public class Rango {
     private StringProperty cargo;
     private IntegerProperty nivelSeguridad;
 
+    
+    public Rango() {
+        
+    }
+    
     public Rango(int idCargo, String cargo, int nivelSeguridad) {
 
         this.idCargo = new SimpleIntegerProperty(idCargo);
         this.cargo = new SimpleStringProperty(cargo);
         this.nivelSeguridad = new SimpleIntegerProperty(nivelSeguridad);
     }
+
+    
 
     public int getidCargo() {
         return idCargo.get();

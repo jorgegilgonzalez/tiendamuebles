@@ -103,20 +103,29 @@ public class PrimaryController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         ;//accedo a la conexion singleton mediante el metodo estatico getinstance
 
         listaRangos = FXCollections.observableArrayList();//inicializa de esta manera porque observablelist es una interfaz y no se puede instanciar
-        comboRango.setItems(listaRangos);//asigna o enlaza la lista al combobox
         Operaciones.informacionRangos(BDConexionSingleton.getInstancia(), listaRangos);//llamo al estatico que me devuelve la info desde la BD
+        comboRango.setItems(listaRangos);//asigna o enlaza la lista al combobox
 
         listaBases = FXCollections.observableArrayList();
+        Operaciones.informacionBases(BDConexionSingleton.getInstancia(), listaBases);
         comboBase.setItems(listaBases);
-        Operaciones.informacionBase(BDConexionSingleton.getInstancia(), listaBases);
 
         listaPersonal = FXCollections.observableArrayList();
-        tableviewInfoPersonal.setItems(listaPersonal);
-        Operaciones.InformacionTabla(BDConexionSingleton.getInstancia(), listaPersonal);
+        if (!busqueda) {//si no esta buscando muestra todo
+
+            tableviewInfoPersonal.setItems(listaPersonal);
+            Operaciones.InformacionTabla(BDConexionSingleton.getInstancia(), listaPersonal);
+
+        } else {//si esta buscando pasa true como parametro para que en el metodo cargue los datos de la busqueda
+
+            tableviewInfoPersonal.setItems(listaPersonal);
+            Operaciones.InformacionTabla(BDConexionSingleton.getInstancia(), listaPersonal);
+
+        }
+
 
         /*enlazar columnas con cada atributo*/
         columnaNombre.setCellValueFactory(new PropertyValueFactory<Personal, String>("nombre"));
@@ -128,26 +137,10 @@ public class PrimaryController implements Initializable {
         recuperarFilaAction();
     }
 
-    /*
-    @FXML
-    
-    private void recuperarFilaAction(ActionEvent event){
-        
-        Personal registroSeleccionado = tableviewInfoPersonal.getSelectionModel().getSelectedItem();
-        tfNombre.setText(registroSeleccionado.getNombre());
-        tfApellido.setText(registroSeleccionado.getApellido());
-        comboRango.setItems(listaRangos.get(0));
-        comboBase.setItems(listaBases);
-        
-        
-
-    }
-     */
-    
-    
     public void recuperarFilaAction() {
         tableviewInfoPersonal.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Personal>() {
+
             @Override
             public void changed(ObservableValue<? extends Personal> ov, Personal anterior, Personal seleccion) {
 
@@ -189,6 +182,8 @@ public class PrimaryController implements Initializable {
         btGuardar.setDisable(false);
         btModificar.setDisable(true);
         btEliminar.setDisable(true);
+        listaPersonal.clear();
+        Operaciones.InformacionTabla(BDConexionSingleton.getInstancia(), listaPersonal);
     }
 
     @FXML
@@ -288,7 +283,6 @@ public class PrimaryController implements Initializable {
     private Scene scene;
     private Parent root;
 
-    
     public void cambiarEscena2(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("loginscreen.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -296,20 +290,69 @@ public class PrimaryController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    //implementar metodo buscar
+    Boolean busqueda = false;
+
     public void buscarRegistro() {
-/*
+
+        listaPersonal.clear();
+        
+        Base base = new Base();
+        
+       
+        if (comboBase.getSelectionModel().getSelectedItem()!=null){
+        
+        base.setIdCiudad(comboBase.getSelectionModel().getSelectedItem().getIdCiudad());
+        base.setCiudad(comboBase.getSelectionModel().getSelectedItem().getCiudad());
+        base.setCapacidad(comboBase.getSelectionModel().getSelectedItem().getCapacidad());
+        System.out.println("impimiento objeto base" + base.toString());
+        } else {
+            
+        base.setIdCiudad(0);
+        base.setCiudad("");
+        base.setCapacidad(0);
+        //System.out.println("imprimiendo objeto base VACIO" + base.toString());
+        
+        }
+        
+        Rango rango = new Rango();
+        
+       
+        if (comboRango.getSelectionModel().getSelectedItem()!=null){
+        
+        rango.setIdCargo(comboRango.getSelectionModel().getSelectedItem().getidCargo());
+        rango.setCargo(comboRango.getSelectionModel().getSelectedItem().getCargo());
+        rango.setNivelSeguridad(comboRango.getSelectionModel().getSelectedItem().getNivelSeguridad());
+        System.out.println("impimiento objeto rango" + base.toString());
+        } else {
+            
+        rango.setIdCargo(0);
+        rango.setCargo("");
+        rango.setNivelSeguridad(0);
+        //System.out.println("imprimiendo objeto rango VACIO" + base.toString());
+            
+        }
+        
         Personal personal = new Personal(
-                Integer.parseInt(tfId.getText()),
+                0,//para la busqueda no voy a usar el id, pero necesito un valor para la creacion del objeto, le asigno 0.
                 tfNombre.getText(),//creo personal desde la info almacenada en los componentes
                 tfApellido.getText(),
                 rdSi.isSelected(),
-                new Rango(comboRango.getSelectionModel().getSelectedItem().getidCargo(), comboRango.getSelectionModel().getSelectedItem().getCargo(), comboRango.getSelectionModel().getSelectedItem().getNivelSeguridad()),
-                new Base(comboBase.getSelectionModel().getSelectedItem().getIdCiudad(), comboBase.getSelectionModel().getSelectedItem().getCiudad(), comboBase.getSelectionModel().getSelectedItem().getCapacidad()));
+                rango,
+                base);
+                //new Base(comboBase.getSelectionModel().getSelectedItem().getIdCiudad(), comboBase.getSelectionModel().getSelectedItem().getCiudad(), comboBase.getSelectionModel().getSelectedItem().getCapacidad()));
 
-        System.out.println("objeto personal creado: \n" + personal.toString());
+       
+        /*Base base = new Base();
+        base.setIdCiudad(comboBase.getSelectionModel().getSelectedItem().getIdCiudad());
+        base.setCiudad(comboBase.getSelectionModel().getSelectedItem().getCiudad());
+        base.setCapacidad(comboBase.getSelectionModel().getSelectedItem().getCapacidad());*/
 
-        Operaciones.buscarEntrada(BDConexionSingleton.getInstancia(), personal);
-*/
+        System.out.println("personal creado" + personal.toString());
+        //tableviewInfoPersonal.setItems(listaPersonal);
+        Operaciones.InformacionBusqueda(BDConexionSingleton.getInstancia(), listaPersonal, personal);
+
     }
 
 }

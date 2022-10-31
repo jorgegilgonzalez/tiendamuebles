@@ -95,13 +95,14 @@
                         <ComboBox fx:id="comboBase" prefHeight="26.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
-                  <Button fx:id="btBuscar" layoutX="32.0" layoutY="437.0" mnemonicParsing="false" onAction="#cambiarEscena2" prefHeight="26.0" prefWidth="302.0" text="Salir" />
-                  <Button fx:id="btModificar" layoutX="32.0" layoutY="258.0" mnemonicParsing="false" onAction="#actualizarRegistro" prefHeight="26.0" prefWidth="302.0" text="Modificar" />
+                  <Button fx:id="btBuscar" layoutX="32.0" layoutY="451.0" mnemonicParsing="false" onAction="#cambiarEscena2" prefHeight="26.0" prefWidth="302.0" text="Salir" />
+                  <Button fx:id="btModificar" layoutX="32.0" layoutY="253.0" mnemonicParsing="false" onAction="#actualizarRegistro" prefHeight="26.0" prefWidth="302.0" text="Modificar" />
                   <Button fx:id="btNuevo" layoutX="32.0" layoutY="398.0" mnemonicParsing="false" onAction="#limpiarCampos" prefHeight="26.0" prefWidth="302.0" text="Nuevo" />
                   <Button fx:id="btGuardar" layoutX="32.0" layoutY="218.0" mnemonicParsing="false" onAction="#guardarRegistro" prefHeight="26.0" prefWidth="302.0" text="Guardar" />
-                  <Button fx:id="btDeshacer" layoutX="32.0" layoutY="354.0" mnemonicParsing="false" onAction="#recuperarUltimoRegistro" prefHeight="26.0" prefWidth="302.0" text="Deshacer" />
-                  <Button fx:id="btEliminar" layoutX="32.0" layoutY="298.0" mnemonicParsing="false" onAction="#eliminarRegistro" prefHeight="26.0" prefWidth="302.0" text="Eliminar" />
+                  <Button fx:id="btDeshacer" layoutX="32.0" layoutY="362.0" mnemonicParsing="false" onAction="#recuperarUltimoRegistro" prefHeight="26.0" prefWidth="302.0" text="Deshacer" />
+                  <Button fx:id="btEliminar" layoutX="32.0" layoutY="289.0" mnemonicParsing="false" onAction="#eliminarRegistro" prefHeight="26.0" prefWidth="302.0" text="Eliminar" />
                   <TextField fx:id="tfId" layoutX="35.0" layoutY="177.0" prefHeight="26.0" prefWidth="31.0" />
+                  <Button fx:id="btBuscar" layoutX="32.0" layoutY="325.0" mnemonicParsing="false" onAction="#buscarRegistro" prefHeight="26.0" prefWidth="302.0" text="Buscar" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="173.0" prefWidth="385.0">
