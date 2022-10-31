@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.registro.nuke.loginscreenController">
+   <children>
+      <SplitPane dividerPositions="0.41081444918106347" layoutX="14.0" layoutY="14.0" prefHeight="494.0" prefWidth="893.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="493.0" prefWidth="377.0">
+               <children>
+                  <Button fx:id="btCancelar" layoutX="32.0" layoutY="398.0" mnemonicParsing="false" onAction="#btCancelarOnAction" prefHeight="26.0" prefWidth="302.0" style="-fx-background-color: #a10f0f;" text="Cancelar" textFill="WHITE" />
+                  <Button fx:id="btEntrar" layoutX="32.0" layoutY="354.0" mnemonicParsing="false" onAction="#btEntrarOnAction" prefHeight="26.0" prefWidth="302.0" style="-fx-background-color: #a10f0f;" text="Entrar" textFill="WHITE" />
+                  <Label layoutX="88.0" layoutY="51.0" text="Login Seguro">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="69.0" layoutY="143.0" text="Usuario" />
+                  <Label layoutX="69.0" layoutY="191.0" text="Contraseña" />
+                  <TextField fx:id="tfUser" layoutX="147.0" layoutY="139.0" promptText="Nombre de usuario" />
+                  <PasswordField fx:id="tfPass" layoutX="148.0" layoutY="187.0" promptText="Password" />
+                  <Label fx:id="lbMensajes" layoutX="31.0" layoutY="268.0" prefHeight="26.0" prefWidth="302.0" textFill="#eb2c1e">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="493.0" prefWidth="530.0" style="-fx-background-color: eb2c1e;">
+               <children>
+                  <Label layoutX="101.0" layoutY="68.0" text="Sistema de Defensa" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="36.0" />
+                     </font>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a10f0f" height="266.0" layoutX="101.0" layoutY="125.0" stroke="BLACK" strokeType="INSIDE" width="325.0" />
+                  <Label alignment="CENTER" layoutX="125.0" layoutY="392.0" prefHeight="42.0" prefWidth="276.0" text="URSS Federacion" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="30.0" />
+                     </font>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </Label>
+                  <ImageView fitHeight="234.0" fitWidth="251.0" layoutX="146.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@russianarmy.png" />
+                     </image>
+                  </ImageView>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="494.0" prefWidth="893.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.registro.nuke.PrimaryController">
+   <children>
+      <SplitPane dividerPositions="0.4063271258694188" layoutX="14.0" layoutY="14.0" prefHeight="494.0" prefWidth="893.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="493.0" prefWidth="377.0">
+               <children>
+                  <GridPane prefHeight="182.0" prefWidth="335.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="135.199951171875" minWidth="10.0" prefWidth="72.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="128.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Nombre:" textAlignment="CENTER">
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <Label text="Apellido:" textAlignment="CENTER" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="En Activo:" textAlignment="CENTER" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Rango Millitar:" textAlignment="CENTER" GridPane.rowIndex="3">
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Base Asignada:" textAlignment="CENTER" GridPane.rowIndex="4">
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfNombre" prefHeight="26.0" prefWidth="181.0" GridPane.columnIndex="1" />
+                        <TextField fx:id="tfApellido" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <RadioButton fx:id="rdSi" mnemonicParsing="false" selected="true" text="Si">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="GrupoEnActivo" />
+                                 </toggleGroup></RadioButton>
+                              <RadioButton fx:id="rdNo" mnemonicParsing="false" text="No" toggleGroup="$GrupoEnActivo" />
+                           </children>
+                           <padding>
+                              <Insets left="9.0" top="9.0" />
+                           </padding>
+                        </HBox>
+                        <ComboBox fx:id="comboRango" prefHeight="26.0" prefWidth="230.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="comboBase" prefHeight="26.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                     </children>
+                  </GridPane>
+                  <Button fx:id="btBuscar" layoutX="32.0" layoutY="437.0" mnemonicParsing="false" onAction="#cambiarEscena2" prefHeight="26.0" prefWidth="302.0" text="Salir" />
+                  <Button fx:id="btModificar" layoutX="32.0" layoutY="258.0" mnemonicParsing="false" onAction="#actualizarRegistro" prefHeight="26.0" prefWidth="302.0" text="Modificar" />
+                  <Button fx:id="btNuevo" layoutX="32.0" layoutY="398.0" mnemonicParsing="false" onAction="#limpiarCampos" prefHeight="26.0" prefWidth="302.0" text="Nuevo" />
+                  <Button fx:id="btGuardar" layoutX="32.0" layoutY="218.0" mnemonicParsing="false" onAction="#guardarRegistro" prefHeight="26.0" prefWidth="302.0" text="Guardar" />
+                  <Button fx:id="btDeshacer" layoutX="32.0" layoutY="354.0" mnemonicParsing="false" onAction="#recuperarUltimoRegistro" prefHeight="26.0" prefWidth="302.0" text="Deshacer" />
+                  <Button fx:id="btEliminar" layoutX="32.0" layoutY="298.0" mnemonicParsing="false" onAction="#eliminarRegistro" prefHeight="26.0" prefWidth="302.0" text="Eliminar" />
+                  <TextField fx:id="tfId" layoutX="35.0" layoutY="177.0" prefHeight="26.0" prefWidth="31.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="173.0" prefWidth="385.0">
+               <children>
+                  <TableView fx:id="tableviewInfoPersonal" layoutY="14.0" prefHeight="493.0" prefWidth="461.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="columnaNombre" prefWidth="75.0" text="Nombre" />
+                      <TableColumn fx:id="columnaApellido" prefWidth="119.20010375976562" text="Apellido" />
+                        <TableColumn fx:id="columnaActivo" prefWidth="59.199951171875" text="En Activo" />
+                        <TableColumn fx:id="columnaRango" prefWidth="123.2000732421875" text="Rango" />
+                        <TableColumn fx:id="columnaBase" prefWidth="148.79995727539062" text="Base" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
