@@ -1,0 +1,2 @@
+contenedor
+docker run -d --rm --name PracticaObligatoriaNuke -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -v BDNuke:/var/lib/mysql mysql:5.7.28

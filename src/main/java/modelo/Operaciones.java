@@ -1,9 +1,11 @@
 package modelo;
 
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.ObservableList;
@@ -82,7 +84,6 @@ public class Operaciones {
                     + "join cargos as b on a.idcargos = b.idcargos "
                     + "join bases as c on a.idbases = c.idbases";
 
-            
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(consulta);
             while (rs.next()) {
@@ -199,17 +200,19 @@ public class Operaciones {
         String filtroNombre = "\"" + personal.getNombre() + "\"";
         String filtroApellido = "\"" + personal.getApellido() + "\"";
         String filtroEsActivo = "\"" + String.valueOf(personal.getEsActivo() ? 1 : 0) + "\"";
-        
-        String filtroCargo ="";
-        if (personal.getRango().getidCargo()>0){
-        filtroCargo = "\"" + String.valueOf(personal.getRango().getidCargo()) + "\"";}
-        
+
+        String filtroCargo = "";
+        if (personal.getRango().getidCargo() > 0) {
+            filtroCargo = "\"" + String.valueOf(personal.getRango().getidCargo()) + "\"";
+        }
+
         System.out.println(filtroCargo);
-        
-        String filtroBase="";
-        if (personal.getBase().getIdCiudad()>0){
-        filtroBase = "\"" + String.valueOf(personal.getBase().getIdCiudad()) + "\"";}
-        
+
+        String filtroBase = "";
+        if (personal.getBase().getIdCiudad() > 0) {
+            filtroBase = "\"" + String.valueOf(personal.getBase().getIdCiudad()) + "\"";
+        }
+
         System.out.println(filtroBase);
 
         StringBuilder filtro = new StringBuilder();//construyo un stringbuilder para crear el filtro where
@@ -235,16 +238,13 @@ public class Operaciones {
         }
 
         //if (personal.getEsActivo() != null) {
-            System.out.println("filtro activo aplicado");
-            filtro.append("a.activo like " + filtroEsActivo);
+        System.out.println("filtro activo aplicado");
+        filtro.append("a.activo like " + filtroEsActivo);
 
-            
-            
-            if (filtroCargo != "" || filtroBase != "") {
-                filtro.append(" and ");
-                System.out.println("filtro activo and ");
-            }
-        
+        if (filtroCargo != "" || filtroBase != "") {
+            filtro.append(" and ");
+            System.out.println("filtro activo and ");
+        }
 
         if (filtroCargo != "") {
 
@@ -256,12 +256,10 @@ public class Operaciones {
             }
 
         }
-            if (filtroBase != "") {
-                System.out.println("filtro base aplicado");
-                filtro.append("c.idbases like " + filtroBase);
-            }
-
-        
+        if (filtroBase != "") {
+            System.out.println("filtro base aplicado");
+            filtro.append("c.idbases like " + filtroBase);
+        }
 
         //System.out.println(filtro);
         consulta += (" WHERE " + filtro);//añade un filtro a la busqueda
@@ -288,4 +286,80 @@ public class Operaciones {
         }
 
     }
+
+    public static int capacidadBase(BDConexionSingleton conexion, String nombreBase, int idBase) {
+
+        int capacidadRestante = 0;
+
+        try {
+
+            String consulta = "SELECT calcularCapacidadRestante(?,?)";
+
+            PreparedStatement ps = conexion.getConexion().prepareStatement(consulta);
+            ps.setString(1, nombreBase);
+            ps.setString(2, String.valueOf(idBase));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                capacidadRestante = rs.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+
+        return capacidadRestante;
+    }
+
+    public static int bajaDefinitivaPersonalBase(BDConexionSingleton conexion, String nombreBase, int idBase) {
+
+        int personalEliminado = 0;
+
+        try {
+
+            String consulta = "{CALL eliminarPersonalInactivo(?,?)}";
+            CallableStatement statement = conexion.getConexion().prepareCall(consulta);
+            statement.registerOutParameter(2, Types.INTEGER);
+            statement.setString(1, String.valueOf(idBase));
+            statement.execute();
+            personalEliminado = statement.getInt(2);
+            statement.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+
+        return personalEliminado;
+    }
+
+    public static boolean insertarPersonalComprobado(BDConexionSingleton conexion, Personal personal, String nombreBase) {
+
+        boolean insertadotransaccion = false;
+
+        
+        if (Operaciones.capacidadBase(conexion, nombreBase, 0) > 0) {
+            if (Operaciones.insertarRegistro(conexion, personal)) {
+                try {
+                    conexion.getConexion().setAutoCommit(false);
+                    conexion.getConexion().commit();
+                    insertadotransaccion = true;
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    conexion.getConexion().rollback();
+                    insertadotransaccion = false;
+                    System.out.println("rollback");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+        }
+        return insertadotransaccion;
+    }
+
 }

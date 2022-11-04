@@ -51,6 +51,12 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private Button btDeshacer;
+    
+     @FXML
+    private Button btCapacidadRestante;
+     
+      @FXML
+    private Button btEliminarBajas;
 
     @FXML
     private TextField tfId;
@@ -80,6 +86,9 @@ public class PrimaryController implements Initializable {
 
     private ObservableList<Base> listaBases;//crea una lista con la que alimentar el combobox
 
+    @FXML
+    private TextField txtCapacidad;
+    
     @FXML
     private TableView<Personal> tableviewInfoPersonal;
 
@@ -199,7 +208,9 @@ public class PrimaryController implements Initializable {
                 new Rango(comboRango.getSelectionModel().getSelectedItem().getidCargo(), comboRango.getSelectionModel().getSelectedItem().getCargo(), comboRango.getSelectionModel().getSelectedItem().getNivelSeguridad()),
                 new Base(comboBase.getSelectionModel().getSelectedItem().getIdCiudad(), comboBase.getSelectionModel().getSelectedItem().getCiudad(), comboBase.getSelectionModel().getSelectedItem().getCapacidad()));
 
-        if (Operaciones.insertarRegistro(BDConexionSingleton.getInstancia(), personal)) {//si es correcto devuelve true
+        String nombreBase = comboBase.getSelectionModel().getSelectedItem().getCiudad().toString();
+        
+        if (Operaciones.insertarPersonalComprobado(BDConexionSingleton.getInstancia(), personal, nombreBase)) {//si es correcto devuelve true
 
             listaPersonal.add(personal);//al anadir el registro actualiza el tableview
 
@@ -354,5 +365,26 @@ public class PrimaryController implements Initializable {
         Operaciones.InformacionBusqueda(BDConexionSingleton.getInstancia(), listaPersonal, personal);
 
     }
+    
+    public void capacidadRestante(){
+        
+        if (!comboBase.getSelectionModel().isEmpty()){//si hay algun elemento seleccionado en el combobox
+        int idbase = comboBase.getSelectionModel().getSelectedItem().getIdCiudad();
+        String nombreBase = comboBase.getSelectionModel().getSelectedItem().getCiudad();
+        txtCapacidad.setText("Capacidad restante: " + String.valueOf((Operaciones.capacidadBase(BDConexionSingleton.getInstancia(), nombreBase, idbase))));
+        }
+    }
+    
+    public void bajasBase(){
+        
+        if (!comboBase.getSelectionModel().isEmpty()){//si hay algun elemento seleccionado en el combobox
+        int idbase = comboBase.getSelectionModel().getSelectedItem().getIdCiudad();
+        String nombreBase = comboBase.getSelectionModel().getSelectedItem().getCiudad();
+        txtCapacidad.setText("Efectivos eliminados " + String.valueOf((Operaciones.bajaDefinitivaPersonalBase(BDConexionSingleton.getInstancia(), nombreBase, idbase))));
+        }
+        }
+    
+    
+    }
 
-}
+
