@@ -112,7 +112,7 @@ public class PrimaryController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ;//accedo a la conexion singleton mediante el metodo estatico getinstance
+        BDConexionSingleton.getInstancia();//accedo a la conexion singleton mediante el metodo estatico getinstance
 
         listaRangos = FXCollections.observableArrayList();//inicializa de esta manera porque observablelist es una interfaz y no se puede instanciar
         Operaciones.informacionRangos(BDConexionSingleton.getInstancia(), listaRangos);//llamo al estatico que me devuelve la info desde la BD
